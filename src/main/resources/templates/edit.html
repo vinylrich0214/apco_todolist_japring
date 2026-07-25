@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmln:th="http:www.thymeleaf.org" xmlns:xmln="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>TODO 수정</title>
+    </head>
+    <body>
+        <h1>TODO 수정</h1>
+
+        <form th:action="@{'/edit/' + ${todo.id}}" method = "post">
+            <input type="text" name="text" th:value="${todo.text}" required>
+            <select name = "priority">
+                <option value="LOW" th:selected="${todo.priority == 'LOW'}">낮음</option>
+                <option value="MEDIUM" th:selected="${todo.priority == 'MEDIUM'}">보통</option>
+                <option value="HIGH" th:selected="${todo.priority == 'HIGH'}">높음</option>
+            </select>
+            <input type="date" name = "dueDate" th:value="${todo.dueDate}" required>
+            <button type="submit">수정 완료</button>
+        </form>
+        <a href="/">돌아가기</a>
+    </body>
+</html>

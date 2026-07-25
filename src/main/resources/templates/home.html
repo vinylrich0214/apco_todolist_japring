@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmln:th="http:www.thymeleaf.org" xmlns:xmln="http://www.w3.org/1999/xhtml">
+    <head>
+        <title th:text="${title}"></title>
+    </head>
+    <body th:text="${body}">
+
+    </body>
+</html>
+
+<!--
+1. html - form,ul,li
+2. controller - @getmapping~~~
+3. thymeleaf 문법 설명
+th:each for in th:each = "todo: ${todos}
+th:text
+th:href
+4. Form 동작 설명
+<form action="/add" method ="post">
+@PostMapping("/add")
+@RequestParam String text
+5. 완료/삭제 기능
+/toggle/{id}
+/delete/{id}
+-->

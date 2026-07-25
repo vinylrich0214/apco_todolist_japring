@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmln:th="http:www.thymeleaf.org" xmlns:xmln="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+</head>
+<body>
+    <form action="/search" method="get">
+        <input type="text" name="word" placeholder="검색어를 입력하세요" th:value="${word}">
+        <button type="submit">검색</button>
+    </form>
+    <h1>Todo List</h1>
+    <form action="/add" method="post">
+      <input type="text" name="text" placeholder="할 일을 입력하시오">
+        <select name="priority">
+            <option value="LOW">낮음</option>
+            <option value="MEDIUM">보통</option>
+            <option value="HIGH">높음</option>
+        </select>
+        <input type="date" name="dueDate" required>
+      <button type="submit">추가</button>
+    </form>
+    <a th:href="@{/sort}">
+        마감일순
+    </a>
+
+    <hr>
+
+    <ul>
+      <li th:each = "todo :${todos}">
+        <span th:style="${todo.done} ?
+        'text-decoration: line-through' : ''" th:text="${todo.text}">
+        </span>
+          <span>
+              중요도:<strong th:text = "${todo.priority}"></strong>
+          </span>
+          <span>
+              마감일:<strong th:text ="${todo.dueDate}"></strong>
+          </span>
+
+          <a th:href ="@{'/toggle/' + ${todo.id}}">완료</a>
+          <a th:href ="@{'/edit/' + ${todo.id}}">수정</a>
+          <a th:href="@{'/delete/' + ${todo.id}}">삭제</a>
+
+
+      </li>
+    </ul>
+</body>
+</html>
