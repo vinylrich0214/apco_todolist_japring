@@ -51,11 +51,18 @@ public class TodoService {
         }
         todoRepository.save(todo);
     }
+    public List<Todo> searchSorted(String keyword){
+        //검색어가 없다?? -> 전체 todo 마감일순 정렬
+        //
+        //검색 있다? -> 검색어가 포함된 Todo만 dueDate순 정렬
+        //-> todoRepository.findByTextContainingOrderByDueDateAsc()
+    }
+
     public List<Todo> search(String text){
-        if (text==null || text.isBlank()){
+        if (text==null || text.trim().isEmpty()){
             return todoRepository.findAll();
         }
-        return todoRepository.findByTextContaining(text);
+        return todoRepository.findByTextContaining(text.trim());
     }
     public List<Todo> findAllSorted(){
         return todoRepository.findAllByOrderByDueDateAsc();

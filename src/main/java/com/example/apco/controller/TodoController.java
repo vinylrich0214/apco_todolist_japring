@@ -74,17 +74,20 @@ public class TodoController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String word,Model model){
-        model.addAttribute("todos",todoService.search(word));
-        model.addAttribute("word",word);
+    public String search(@RequestParam String keyword,Model model){
+        model.addAttribute("todos",todoService.search(keyword));
+        model.addAttribute("keyword",keyword);
         return "index";
     }
     @GetMapping("/sort")
-    public String sort(Model model){
+    public String sort(@RequestParam(
+            required = false,defaultValue = "")
+                           String keyword, Model model){
         model.addAttribute(
                 "todos",
                 todoService.findAllSorted()
         );
+        //바ㄲㅝ야 할 곳
         return "index";
     }
 

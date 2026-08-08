@@ -6,7 +6,7 @@
 </head>
 <body>
     <form action="/search" method="get">
-        <input type="text" name="word" placeholder="검색어를 입력하세요" th:value="${word}">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
         <button type="submit">검색</button>
     </form>
     <h1>Todo List</h1>
@@ -20,7 +20,8 @@
         <input type="date" name="dueDate" required>
       <button type="submit">추가</button>
     </form>
-    <a th:href="@{/sort}">
+    <a th:href="@{/sort(keyword=${keyword})}">
+        <!--검색어가 면도 /sort?keyword=면도 -->
         마감일순
     </a>
 
