@@ -75,19 +75,21 @@ public class TodoController {
 
     @GetMapping("/search")
     public String search(@RequestParam String keyword,Model model){
-        model.addAttribute("todos",todoService.search(keyword));
+        String sorttype = "dueDateAsc";
+        model.addAttribute("todos",todoService.searchAndSort(keyword,sorttype));
         model.addAttribute("keyword",keyword);
         return "index";
     }
     @GetMapping("/sort")
-    public String sort(@RequestParam(
-            required = false,defaultValue = "")
-                           String keyword, Model model){
+    public String sort(@RequestParam(required = false,defaultValue = "")  String keyword
+                        ,@RequestParam(defaultValue = "dueDateAsc") String sortType
+            , Model model){
         model.addAttribute(
                 "todos",
-                todoService.searchSorted(keyword)
+                todoService.searchAndSort(keyword,sortType)
         );
         model.addAttribute("keyword",keyword);
+        model.addAttribute("sortType",sortType);
         return "index";
     }
     // 8가지 상황 테스트
