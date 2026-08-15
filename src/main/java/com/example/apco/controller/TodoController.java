@@ -85,11 +85,20 @@ public class TodoController {
                            String keyword, Model model){
         model.addAttribute(
                 "todos",
-                todoService.findAllSorted()
+                todoService.searchSorted(keyword)
         );
-        //바ㄲㅝ야 할 곳
+        model.addAttribute("keyword",keyword);
         return "index";
     }
+    // 8가지 상황 테스트
+    //1. 검색 없이 정렬
+    //2. '숙제' 검색 후 정렬
+    //3. 빈칸,공백 검색
+    //4. 결과 없는 검색
+    //5. 정렬 후 keyword 유지
+    //6. 추가 정렬 필터 결과
+    //7. 수정,완,삭
+    //8. 오류 발생하면 url 기록
 
     // 중요도(priority), 마감일(duetime)
     // Todo entity에 priority,dueDate 필드 추가하기

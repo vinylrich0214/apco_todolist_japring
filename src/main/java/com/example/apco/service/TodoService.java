@@ -52,10 +52,10 @@ public class TodoService {
         todoRepository.save(todo);
     }
     public List<Todo> searchSorted(String keyword){
-        //검색어가 없다?? -> 전체 todo 마감일순 정렬
-        //
-        //검색 있다? -> 검색어가 포함된 Todo만 dueDate순 정렬
-        //-> todoRepository.findByTextContainingOrderByDueDateAsc()
+        if (keyword==null || keyword.trim().isEmpty()){
+            return todoRepository.findAllByOrderByDueDateAsc();
+        }
+       return todoRepository.findByTextContainingOrderByDueDateAsc(keyword.trim());
     }
 
     public List<Todo> search(String text){
