@@ -60,6 +60,7 @@ public class TodoController {
     //UPDATE(U)
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id,Model model){
+        //localhost:8080/edit/1
         Todo todo=todoService.findById(id);
         model.addAttribute("todo",todo);
         return "edit";
