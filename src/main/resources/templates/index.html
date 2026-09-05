@@ -55,9 +55,19 @@
               마감일:<strong th:text ="${todo.dueDate}"></strong>
           </span>
 
-          <a th:href ="@{'/toggle/' + ${todo.id}}">완료</a>
+          <a th:href ={/toggle/{id}(
+             id=${todo.id},
+             keyword=${keyword},
+             sortType=${sortType}
+             )}>완료</a>
+
           <a th:href ="@{'/edit/' + ${todo.id}}">수정</a>
-          <a th:href="@{'/delete/' + ${todo.id}}">삭제</a>
+
+          <a th:href="{/delete/{id}(
+             id=${todo.id},
+             keyword=${keyword},
+             sortType=${sortType}
+             )}">삭제</a>
 
 
       </li>
