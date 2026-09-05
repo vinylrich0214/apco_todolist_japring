@@ -16,8 +16,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 //JPA, H2
+//Todo 추가
+//Todo 검색
+//Todo 정렬
+// 완료
+// 완료 취소
+// 수정 화면 열기
+// 수정 저장
+// 삭제
 @Controller
 public class TodoController {
+    private String redirectToList(
+            String keyword,
+            String sortType,
+            RedirectAttributes redirectAttributes){
+        redirectAttributes.addAttribute("keyword",keyword);
+        redirectAttributes.addAttribute("sortType",sortType);
+        return "redirect:/sort";
+    }
     private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
@@ -46,7 +62,12 @@ public class TodoController {
         return "redirect:/";
     }
     //Delete
-    @GetMapping("/delete/{id}")
+    // 1. POST /delete/3
+    //2. Todo 상태 변경(toggle,delete)
+    //3. 302 Redirect
+    //4. GET /sort?keyword="숙제&sortType=dueDateqDesc
+    //5 목록 화면 출력
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id,
                          @RequestParam(defaultValue = "")
                          String keyword,
@@ -54,28 +75,37 @@ public class TodoController {
                          String sortType,
                          RedirectAttributes redirectAttributes)
     {
-    //todos.remove(id)
+        // GET은 원칙적으로 데이터를 "조회" 하는 안전한 요청이어야 한다
+        // 서버 상태를 변경하는 작업에는 사용하지 않는 것이 맞다
+        // POST는 서버에 데이터를 보내 상태 변경이나 부수 효과를 요청할 때 사용한다
+
+        // 목록 보는 것 ->GET
+        // 검색 정렬 -> GET
+        // 수정 화면 열기 -> GET
+        // Todo 추가 -> POST
+        // Todo 수정 저장 -> POST
+        // 완료 상태 변경 -> POST
+        // Todo 삭제 -> POST
+        //404 -> 경로를 찾지 못함
+        // 405 -> 경로는 있지만 요청 방시이 맞지 않음
+        //todos.remove(id)
         todoService.deleteTodo(id);
-        redirectAttributes.addAttribute("keyword",keyword);
-        redirectAttributes.addAttribute("sortType",sortType);
-        return "redirect:/";
+
+        return redirectToList(keyword,sortType,redirectAttributes);
     }
     //update
-    @GetMapping("/toggle/{id}")
+    @PostMapping("/toggle/{id}")
     public String toggle(
             @PathVariable Long id,
             @RequestParam(defaultValue = "")
             String keyword,
             @RequestParam(defaultValue="dueDateAsc")
             String sortType,
-            RedirectAttributes redirectAtrributes
+            RedirectAttributes redirectAttributes
             )
             {
         todoService.toggleTodo(id);
-        redirectAtrributes.addAttribute("keyword",keyword);
-        redirectAtrributes.addAttribute("sortType",sortType);
-
-        return "redirect:/sort";
+        return redirectToList(keyword,sortType,redirectAttributes);
         //localhost:8080/sort?keyword="숙제"$sortType="dueDateAsc
     }
     //UPDATE(U)

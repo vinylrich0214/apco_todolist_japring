@@ -5,10 +5,7 @@
     <title>Todo List</title>
 </head>
 <body>
-    <form action="/search" method="get">
-        <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
-        <button type="submit">검색</button>
-    </form>
+
     <h1>Todo List</h1>
     <form action="/add" method="post">
       <input type="text" name="text" placeholder="할 일을 입력하시오">
@@ -55,21 +52,58 @@
               마감일:<strong th:text ="${todo.dueDate}"></strong>
           </span>
 
-          <a th:href ={/toggle/{id}(
-             id=${todo.id},
-             keyword=${keyword},
-             sortType=${sortType}
-             )}>완료</a>
 
+          <form
+                  th:action="@{toggle/{id}(id=${todo.id})}"
+                  method="post"
+                  style="display: inline;"
+          >
+           <input
+               type="hidden"
+               name="keyword"
+               th:value="${keyword}"
+          >
+          <input
+                  type="hidden"
+                  name="sortType"
+                  th:value="${sortType}"
+          >
+              <button type="submit">
+                  완료
+              </button>
+          </form>
+          <!--
+            id -> url경로로 /toggle/3
+
+
+            keyword POST form data
+            sortType POST form data
+
+           -->
           <a th:href ="@{'/edit/' + ${todo.id}}">수정</a>
 
-          <a th:href="{/delete/{id}(
-             id=${todo.id},
-             keyword=${keyword},
-             sortType=${sortType}
-             )}">삭제</a>
-
-
+          <form
+                  th:action="@{delete/{id}(id=${todo.id})}"
+                  method="post"
+                  style="display: inline;"
+          >
+              <input
+                      type="hidden"
+                      name="keyword"
+                      th:value="${keyword}"
+              >
+              <input
+                      type="hidden"
+                      name="sortType"
+                      th:value="${sortType}"
+              >
+              <button type="submit">
+                  삭제
+              </button>
+          </form>
+          <!-- 왜 method = delete가 아닐까?
+          기본 HTML FORM이 직접 지원하는 요청방식은 GET,POST
+          JAVASCRIPT fetch() spring에 메서드 변환 기능을 배우면 delete 요처ㅇ으로 확장이 가능-->
       </li>
     </ul>
 </body>
